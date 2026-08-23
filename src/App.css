@@ -1,0 +1,10 @@
+.app {
+  width: 100%;
+  overflow-x: hidden;
+  animation: app-fade-in var(--duration-slow) var(--ease-elegant);
+}
+
+@keyframes app-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

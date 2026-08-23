@@ -1,0 +1,153 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--space-md);
+  padding-bottom: calc(var(--space-xl) + 2.4rem);
+  overflow: hidden;
+  background: var(--color-charcoal);
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* tuned for the sunset silhouette shot: couple sits mid-frame, sky/sun above */
+  object-position: center 40%;
+  animation: hero-reveal var(--duration-slow) var(--ease-elegant) both;
+  transition: transform 2.2s var(--ease-elegant);
+}
+
+.hero:hover .hero__bg {
+  transform: scale(1.03);
+}
+
+@keyframes hero-reveal {
+  from { opacity: 0; transform: scale(1.06); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Stronger, more even gradient so text stays legible over any photo */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(43, 20, 15, 0.28) 0%,
+      rgba(43, 20, 15, 0.12) 24%,
+      rgba(43, 20, 15, 0.42) 50%,
+      rgba(43, 20, 15, 0.78) 72%,
+      rgba(43, 20, 15, 0.94) 100%);
+  pointer-events: none;
+}
+
+/* Arch shrunk and pushed further up so it frames the top of the photo
+   instead of cutting across the couple's faces */
+.hero__arch {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(78vw, 380px);
+  height: 32%;
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 460px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-cream);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: 24px;
+  /* soft dark pad behind the text for extra contrast, independent of the photo */
+  background: linear-gradient(180deg, transparent 0%, rgba(43, 20, 15, 0.18) 60%, rgba(43, 20, 15, 0.3) 100%);
+  animation: hero-content-in var(--duration-slow) var(--ease-elegant) 0.25s both;
+}
+
+@keyframes hero-content-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero__eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  margin-bottom: var(--space-sm);
+}
+
+.hero__names {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 12vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.05;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.3em;
+  flex-wrap: wrap;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.hero__amp {
+  font-family: var(--font-script);
+  font-style: italic;
+  color: var(--color-gold-light);
+  font-size: 0.68em;
+}
+
+.hero__invite {
+  font-family: var(--font-script);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--color-champagne, var(--color-gold-light));
+  margin-top: var(--space-sm);
+  line-height: 1.55;
+  max-width: 24rem;
+}
+
+.hero__scroll {
+  position: absolute;
+  z-index: 1;
+  bottom: var(--space-md);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-cream);
+  opacity: 0.85;
+  transition: opacity var(--duration-fast) var(--ease-elegant), transform var(--duration-fast) var(--ease-elegant);
+}
+
+.hero__scroll:hover {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.hero__scroll-icon {
+  animation: hero-bounce 2.2s ease-in-out infinite;
+  font-size: 0.9rem;
+}
+
+@keyframes hero-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(5px); opacity: 1; }
+}

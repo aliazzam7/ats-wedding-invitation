@@ -1,0 +1,362 @@
+.details {
+  position: relative;
+  background: var(--color-wine-deep);
+  text-align: center;
+  overflow: hidden;
+}
+
+.details__arch {
+  position: absolute;
+  top: -8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(140vw, 720px);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.details__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.details__glow--one {
+  width: 280px;
+  height: 280px;
+  top: -60px;
+  left: -80px;
+  background: var(--color-gold);
+  animation: details-drift-a 12s ease-in-out infinite;
+}
+
+.details__glow--two {
+  width: 240px;
+  height: 240px;
+  bottom: -60px;
+  right: -60px;
+  background: var(--color-wine-soft);
+  animation: details-drift-b 14s ease-in-out infinite;
+}
+
+@keyframes details-drift-a {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(24px, 18px); }
+}
+
+@keyframes details-drift-b {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-20px, -16px); }
+}
+
+.details__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details__eyebrow {
+  color: var(--color-gold-light);
+}
+
+.details__names {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 8vw, 2.5rem);
+  font-weight: 500;
+  color: var(--color-cream);
+  margin-top: 0.25rem;
+}
+
+.details__amp {
+  font-family: var(--font-script);
+  font-style: italic;
+  color: var(--color-gold-light);
+}
+
+.details__date {
+  font-family: var(--font-script);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--color-gold-light);
+}
+
+/* ----- layout: calendar card stacked above the location card,
+   centered and width-capped so it stays tidy on mobile AND desktop ----- */
+.details__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 380px;
+  margin: var(--space-lg) auto 0;
+}
+
+@media (min-width: 640px) {
+  .details__stack {
+    max-width: 430px;
+    gap: var(--space-lg);
+  }
+}
+
+.details__calendar,
+.details__location {
+  width: 100%;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(28px) scale(0.97);
+  transition:
+    opacity 0.7s var(--ease-soft),
+    transform 0.7s var(--ease-soft),
+    border-color var(--duration-med) var(--ease-elegant),
+    background var(--duration-med) var(--ease-elegant);
+  transition-delay: calc(var(--card-index) * 140ms);
+}
+
+.details__stack--in .details__calendar,
+.details__stack--in .details__location {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ----- calendar card ----- */
+.details__calendar {
+  background: rgba(251, 245, 234, 0.06);
+  border: 1px solid rgba(184, 146, 90, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: var(--space-md) var(--space-md) var(--space-sm);
+  transition:
+    opacity 0.7s var(--ease-soft),
+    transform 0.7s var(--ease-soft),
+    border-color var(--duration-med) var(--ease-elegant),
+    background var(--duration-med) var(--ease-elegant);
+}
+
+.details__calendar:hover {
+  border-color: var(--color-gold);
+  background: rgba(251, 245, 234, 0.09);
+}
+
+.details__calendar-head {
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(184, 146, 90, 0.3);
+}
+
+.details__calendar-month {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 4vw, 1.15rem);
+  letter-spacing: 0.04em;
+  color: var(--color-cream);
+}
+
+.details__calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 0.4rem;
+}
+
+.details__calendar-weekdays span {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  opacity: 0.7;
+}
+
+.details__calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 0.3rem;
+}
+
+.details__calendar-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details__calendar-cell--empty {
+  visibility: hidden;
+}
+
+.details__calendar-day-num {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  color: rgba(251, 245, 234, 0.75);
+  transition: background var(--duration-med) var(--ease-elegant), color var(--duration-med) var(--ease-elegant);
+}
+
+.details__calendar-cell--marked .details__calendar-day-num {
+  background: var(--color-gold);
+  color: var(--color-wine-deep);
+  font-weight: 600;
+  box-shadow: 0 0 0 4px rgba(184, 146, 90, 0.18);
+}
+
+.details__calendar-heart {
+  position: absolute;
+  top: -3px;
+  right: 4px;
+  width: 13px;
+  height: 13px;
+  padding: 2px;
+  box-sizing: content-box;
+  color: var(--color-wine-deep);
+  background: var(--color-gold-light);
+  border-radius: 50%;
+  z-index: 2;
+  animation: calendar-heart-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes calendar-heart-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+.details__calendar-foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(184, 146, 90, 0.3);
+}
+
+.details__calendar-weekday-full {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--color-gold-light);
+}
+
+.details__calendar-divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(184, 146, 90, 0.4);
+}
+
+.details__calendar-time {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-cream);
+}
+
+.details__calendar-time svg {
+  width: 15px;
+  height: 15px;
+  color: var(--color-gold-light);
+}
+
+/* ----- location card ----- */
+.details__location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: var(--space-md);
+  background: rgba(251, 245, 234, 0.06);
+  border: 1px solid rgba(184, 146, 90, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: default;
+  transition:
+    opacity 0.7s var(--ease-soft),
+    transform 0.7s var(--ease-soft),
+    border-color var(--duration-med) var(--ease-elegant),
+    background var(--duration-med) var(--ease-elegant);
+}
+
+.details__location:hover {
+  border-color: var(--color-gold);
+  background: rgba(251, 245, 234, 0.11);
+  transform: translateY(-3px);
+}
+
+.details__location-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold-light);
+  margin-bottom: 0.2rem;
+}
+
+.details__location-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.details__location-label {
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  opacity: 0.85;
+}
+
+.details__location-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--color-cream);
+}
+
+.details__location-city {
+  font-size: 0.85rem;
+  color: rgba(251, 245, 234, 0.65);
+}
+
+.details__map-btn {
+  position: relative;
+  margin-top: var(--space-lg);
+  display: inline-block;
+  padding: 0.85rem 2.2rem;
+  border: 1px solid var(--color-gold-light);
+  color: var(--color-gold-light);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: color var(--duration-med) var(--ease-elegant), transform var(--duration-med) var(--ease-elegant);
+}
+
+.details__map-btn-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--color-gold-light);
+  transform: translateY(102%);
+  transition: transform var(--duration-med) var(--ease-elegant);
+}
+
+.details__map-btn-label {
+  position: relative;
+  z-index: 1;
+}
+
+.details__map-btn:hover {
+  color: var(--color-wine-deep);
+  transform: translateY(-2px);
+}
+
+.details__map-btn:hover .details__map-btn-fill {
+  transform: translateY(0);
+}

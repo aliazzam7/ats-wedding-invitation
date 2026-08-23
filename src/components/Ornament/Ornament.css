@@ -1,0 +1,18 @@
+.ornament {
+  display: block;
+}
+
+.ornament--branch {
+  width: 120px;
+  height: auto;
+}
+
+.ornament--diamond {
+  width: 100px;
+  height: auto;
+}
+
+.ornament--arch {
+  width: 100%;
+  height: 100%;
+}
